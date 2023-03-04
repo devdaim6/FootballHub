@@ -7,14 +7,14 @@ import { faSoccerBall } from "@fortawesome/free-solid-svg-icons";
 // import { solid, regular, brands, icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 import HomeItem from "./HomeItem";
 import React, { Component } from "react";
-
+import Loader from "./Spinner";
 export default class Home extends Component {
   articles = [];
   constructor() {
     super();
     this.state = {
       articles: [],
-     
+     loader:true
     };
   }
   async componentDidMount() {
@@ -23,7 +23,7 @@ export default class Home extends Component {
     this.setState({ loader: true });
     let data = await fetch(url);
     let parsedData = await data.json();
-    this.setState({ articles: parsedData});
+    this.setState({ articles: parsedData,loader:false});
   }
   render() {
  
@@ -75,6 +75,7 @@ export default class Home extends Component {
 
         <section id="gallery">
           <div className="container">
+            {this.state.loader && <Loader/>}
             <div className="row">
               <hr />
               {this.state.articles.map((element) => {
